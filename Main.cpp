@@ -13,7 +13,7 @@ void printInstructions() {
 }
 
 void creatBlackJackGame() {
-	BlackJack* game = new BlackJack;
+	Blackjack* game = new Blackjack();
 	std::cout << "*** Now Playing Blackjack ***\n";
 }
 

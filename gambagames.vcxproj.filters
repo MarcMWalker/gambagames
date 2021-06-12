@@ -21,7 +21,7 @@
     <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BlackJack.cpp">
+    <ClCompile Include="Blackjack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BlackJack.h">
+    <ClInclude Include="Blackjack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
