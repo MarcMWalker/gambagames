@@ -9,14 +9,21 @@ void Blackjack::createDeck() {
 	
 }
 
-int Blackjack::getPlayerScore()
-{
+int Blackjack::getPlayerScore () const{
 	return 0;
 }
 
-int Blackjack::getDealerScore()
-{
+int Blackjack::getDealerScore () const{
 	return 0;
+}
+
+void Blackjack::playGame(){
+}
+
+void Blackjack::setPlayerScore(int& m_playerScore){
+}
+
+void Blackjack::dealCard(int& m_playerScore){
 }
 
 Blackjack::~Blackjack() {
