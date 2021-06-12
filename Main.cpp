@@ -12,8 +12,8 @@ void printInstructions() {
 	std::cout << "------------------------------------\n";
 }
 
-void creatBlackJackGame() {
-	Blackjack* game = new Blackjack();
+void creatBlackJackGame(int &playerChips) {
+	Blackjack* game = new Blackjack(playerChips);
 	std::cout << "*** Now Playing Blackjack ***\n";
 }
 
@@ -25,6 +25,7 @@ char input() {
 }
 
 void menuChoice(char input, User* user, bool &exit) {
+	int playerChips = user->getChips();
 	switch (input) {
 	case 'a':
 	case 'A':
@@ -32,8 +33,8 @@ void menuChoice(char input, User* user, bool &exit) {
 		break;
 	case 'b':
 	case 'B':
-		//start blackjack game with user
-		creatBlackJackGame();
+		creatBlackJackGame(playerChips);
+		user->setChips(playerChips);
 		break;
 	case 'c':
 	case 'C':

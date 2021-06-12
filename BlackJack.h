@@ -1,19 +1,24 @@
 #ifndef BLACKJACK_H
 #define BLACKJACK_H
+#include <array>
+#include <string>
+
 class Blackjack{
 private:
-	enum Value {
-		ACE_LOWER, TWO, THREE,
-		FOUR, FIVE, SIX, SEVEN,
-		EIGHT, NINE, TEN,JACK,
-		QUEEN, KING, ACE_UPPER
-	};
-	enum Suit {
-		HEARTS, CLUBS, DIAMONDS, SPADES
-	};
+	int m_playerScore{};
+	int m_dealerScore{};
+	int m_playerChips{};
+	std::string m_cardValue[14]{ "Ace", "Two", "Three", "Four", "Five",
+									"Six", "Seven", "Eight", "Nine", "Ten",
+									"Jack", "Queen", "King" };
 public:
+	void createDeck();
+	int getPlayerScore();
+	int getDealerScore();
+	
+	~Blackjack();
 
+	Blackjack(int &playerChips);
 };
 
 #endif
-
