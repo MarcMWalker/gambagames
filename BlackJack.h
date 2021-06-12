@@ -1,6 +1,6 @@
 #ifndef BLACKJACK_H
 #define BLACKJACK_H
-class BlackJack{
+class Blackjack{
 private:
 	enum Value {
 		ACE_LOWER, TWO, THREE,
