@@ -7,7 +7,8 @@ void printInstructions() {
 	std::cout << "------------------------------------\n";
 	std::cout << "(A): Add funds to account\n";
 	std::cout << "(B): Play Blackjack\n";
-	std::cout << "(E): Exit Casino\n";
+	std::cout << "(C): Change money to chips\n";
+	std::cout << "(E): Exit Casino and cash out chips\n";
 	std::cout << "------------------------------------\n";
 }
 
@@ -27,7 +28,6 @@ void menuChoice(char input, User* user, bool &exit) {
 	switch (input) {
 	case 'a':
 	case 'A':
-		//user has another $1000 added to account
 		user->addFunds();
 		break;
 	case 'b':
@@ -35,10 +35,14 @@ void menuChoice(char input, User* user, bool &exit) {
 		//start blackjack game with user
 		creatBlackJackGame();
 		break;
+	case 'c':
+	case 'C':
+		user->transferFundsToChips();
+		break;
 	case 'e':
 	case 'E':
-		//exit program
 		exit = true;
+		user->transferChipsToFunds();
 		std::cout << "Exiting program...";
 		break;
 	default:

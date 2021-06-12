@@ -16,7 +16,10 @@ void User::addFunds() {
 	std::cout << "Amount to add to account: ";
 	float addFund{};
 	std::cin >> addFund;
-	m_funds += addFund;
+	if (addFund >= 1.0f)
+		m_funds += addFund;
+	else
+		std::cout << "Adding zero funds to account cant be done...";
 }
 
 void User::setChips(int chips) {
@@ -33,12 +36,17 @@ void User::transferChipsToFunds() {
 }
 
 void User::transferFundsToChips() {
-	std::cout << "How many chips would you like to purchase?\n";
+	std::cout << "How many chips would you like to purchase? (1 chip = $100)\n";
 	std::cout << "Amount: ";
 	int amount{};
 	std::cin >> amount;
-	m_chips += amount;
-	m_funds -= (amount * 100);
+	if (amount >= 1) {
+		m_chips += amount;
+		m_funds -= (amount * 100);
+		std::cout << "Spent $" << amount * 100 << " for " << amount << " chips.\n";
+	}else {
+		std::cout << "Increase chips by zero, cant be done...";
+	}
 }
 
 User::~User() {
