@@ -28,6 +28,7 @@ void menuChoice(char input, User* user, bool &exit) {
 	case 'a':
 	case 'A':
 		//user has another $1000 added to account
+		user->addFunds();
 		break;
 	case 'b':
 	case 'B':
