@@ -36,7 +36,8 @@ void Blackjack::playGame(){
 		int chipsPlaced{};
 		std::cin >> chipsPlaced;
 		m_chips -= chipsPlaced;
-		std::cout << m_cardValue[generateRandomNum()] << "\n";
+		dealCards(m_playerScore);
+		//std::cout << m_cardValue[generateRandomNum()] << "\n";
 	} while (exit != true);
 }
 
@@ -65,12 +66,40 @@ int Blackjack::generateRandomNum(){
 	return num;
 }
 
-void Blackjack::dealCard(){
+void Blackjack::dealCards(int& playerScore){
+	std::vector<int>playerCardTotal{};
+	std::vector<int>dealerCardTotal{};
+
+	dealerCardTotal.push_back(generateRandomNum());
+	dealerCardTotal.push_back(generateRandomNum());
+
+	playerCardTotal.push_back(generateRandomNum());
+	playerCardTotal.push_back(generateRandomNum());
+
+	std::cout << "Dealer Score: " << dealerCardTotal.at(0) << " ??? " << "\n";
+	std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
 	
+	while (playerScore <= 21) {
+		int card{generateRandomNum()};
+	}
+
+	if (playerScore > 21) {
+		std::cout << "BUST! ";
+		m_playerWin = false;
+		return;
+	}
 }
 
 int Blackjack::getChips(int m_playerChips){
 	return m_playerChips;
+}
+
+int Blackjack::calculateCards(std::vector<int>cards)const {
+	int total{};
+	for (int i : cards) {
+		total += i;
+	}
+	return total;
 }
 
 Blackjack::~Blackjack() {
