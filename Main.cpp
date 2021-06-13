@@ -14,7 +14,8 @@ void printInstructions() {
 
 void creatBlackJackGame(int &playerChips) {
 	Blackjack* game = new Blackjack(playerChips);
-	std::cout << "*** Now Playing Blackjack ***\n";
+	std::cout << "\n*** Now Playing Blackjack ***\n";
+	game->playGame();
 }
 
 char input() {
