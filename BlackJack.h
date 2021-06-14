@@ -26,7 +26,7 @@ public:
 	void resetDealerScore();
 	void checkWinner(int &m_playerScore, int& m_dealerScore);
 	int generateRandomNum();
-	void dealCards(int &playerScore);
+	void dealCards(int &playerScore, int chipsPlaced);
 	int getChips(int m_playerChips);
 	int calculateCards(std::vector<int>cards)const;
 	~Blackjack();
