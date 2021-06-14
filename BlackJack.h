@@ -15,8 +15,9 @@ private:
 								 "Jack", "Queen", "King" };
 public:
 	Blackjack(int& playerChips);
-	void createDeck();
 	void printInstructions();
+	void anotherInstructions();
+	bool playerInput();
 	int getPlayerScore()const;
 	int getDealerScore()const;
 	void playGame();
@@ -27,7 +28,7 @@ public:
 	void checkWinner(int &m_playerScore, int& m_dealerScore);
 	int generateRandomNum();
 	void dealCards(int &playerScore, int chipsPlaced);
-	int getChips(int m_playerChips);
+	int getChips();
 	int calculateCards(std::vector<int>cards)const;
 	~Blackjack();
 };

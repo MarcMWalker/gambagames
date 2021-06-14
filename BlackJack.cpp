@@ -9,12 +9,28 @@
 Blackjack::Blackjack(int& playerChips) : m_playerScore{ 0 }, m_dealerScore{ 0 }, m_chips{playerChips} {
 }
 
-void Blackjack::createDeck() {
-	
-}
-
 void Blackjack::printInstructions(){
 	std::cout << "How many chips would you like to place for the start: ";
+}
+
+void Blackjack::anotherInstructions() {
+	std::cout << "Another game Y/N?";
+}
+
+bool Blackjack::playerInput() {
+	char input{};
+	std::cin >> input;
+
+	switch (input) {
+	case 'y':
+	case 'Y':
+		return false;
+	case 'n':
+	case 'N':
+		return true;
+	default:
+		break;
+	}
 }
 
 int Blackjack::getPlayerScore () const{
@@ -37,7 +53,8 @@ void Blackjack::playGame(){
 		std::cin >> chipsPlaced;
 		m_chips -= chipsPlaced;
 		dealCards(m_playerScore, chipsPlaced);
-	
+		anotherInstructions();
+		exit = playerInput();
 	} while (exit != true);
 }
 
@@ -80,24 +97,29 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 	std::cout << "Dealer Score: " << dealerCardTotal.at(0) << " ??? " << "\n";
 	std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
 	
-	while (calculateCards(playerCardTotal) <= 21 || playerSkip == true) {
-		std::cout << "Another card Y/N: ";
-		char choice{};
-		std::cin >> choice;
+	bool end{};
+	while (end != true) {
+		if (calculateCards(playerCardTotal) <= 21 && end != true) {
+			
+			std::cout << "Another card Y/N: ";
+			char choice{};
+			std::cin >> choice;
 
-		switch (choice) {
-		case 'y':
-		case 'Y':
-			playerCardTotal.push_back(generateRandomNum());
-			std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
-			break;
-		case 'n':
-		case 'N':
-			playerSkip = true;
-			break;
-		default:
-			break;
+			switch (choice) {
+			case 'y':
+			case 'Y':
+				playerCardTotal.push_back(generateRandomNum());
+				std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
+				break;
+			case 'n':
+			case 'N':
+				end = true;
+				break;
+			default:
+				break;
+			}
 		}
+		else { end = true; }
 		//int card{generateRandomNum()};
 	}
 
@@ -105,17 +127,25 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 		std::cout << "WINNER!";
 		std::cout << "You collected " << chipsPlaced * 2;
 		m_chips += (chipsPlaced * 2);
+		end = true;
+	}
+
+	if (calculateCards(playerCardTotal) <= 21) {
+		std::cout << "WINNER!";
+		std::cout << "You collected " << chipsPlaced * 2;
+		m_chips += (chipsPlaced * 2);
+		end = true;
 	}
 
 	if (calculateCards(playerCardTotal) > 21) {
 		std::cout << "BUST! ";
 		m_playerWin = false;
-		return;
+		end = true;
 	}
 }
 
-int Blackjack::getChips(int m_playerChips){
-	return m_playerChips;
+int Blackjack::getChips(){
+	return Blackjack::m_chips;
 }
 
 int Blackjack::calculateCards(std::vector<int>cards)const {

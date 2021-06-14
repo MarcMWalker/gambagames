@@ -16,6 +16,7 @@ void creatBlackJackGame(int &playerChips) {
 	Blackjack* game = new Blackjack(playerChips);
 	std::cout << "\n*** Now Playing Blackjack ***\n";
 	game->playGame();
+	playerChips = game->getChips();
 }
 
 char input() {
