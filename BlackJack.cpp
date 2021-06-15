@@ -74,9 +74,6 @@ void Blackjack::resetDealerScore(){
 	m_dealerScore = 0;
 }
 
-void Blackjack::checkWinner(int& m_playerScore, int& m_dealerScore){
-}
-
 int Blackjack::generateRandomNum(){
 	srand(time(NULL));
 	int num{ (rand() % 13 + 1) - 1 };
@@ -103,6 +100,7 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 
 	std::cout << "Dealer Score: " << dealerCardTotal.at(0) << " ??? " << "\n";
 	std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
+	printValueToText(playerCardTotal);
 	
 	bool end{};
 	while (end != true) {
@@ -117,6 +115,7 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 			case 'Y':
 				playerCardTotal.push_back(generateRandomNum());
 				std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
+				printValueToText(playerCardTotal);
 				break;
 			case 'n':
 			case 'N':
@@ -168,16 +167,23 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 	}
 }
 
-int Blackjack::getChips(){
+int Blackjack::getChips()const{
 	return Blackjack::m_chips;
 }
 
-int Blackjack::calculateCards(std::vector<int>cards)const {
+int Blackjack::calculateCards(std::vector<int>&cards)const {
 	int total{};
 	for (int i : cards) {
 		total += i;
 	}
 	return total;
+}
+
+void Blackjack::printValueToText(std::vector<int>& cards) const {
+	for (int i{ 0 }; i < cards.size(); i++) {
+		int copy{ cards.at(i) };
+		std::cout << Blackjack::m_cardValue[copy-1] << " | ";
+	}
 }
 
 Blackjack::~Blackjack() {
