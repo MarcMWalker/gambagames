@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <ctime>
 
 class Blackjack{
 private:
@@ -10,9 +11,9 @@ private:
 	int m_dealerScore{};
 	int m_chips{};
 	bool m_playerWin{};
-	std::string m_cardValue[14]{ "Ace", "Two", "Three", "Four", "Five",
+	std::vector<std::string> m_cardValue{ "Ace", "Two", "Three", "Four", "Five",
 								 "Six", "Seven", "Eight", "Nine", "Ten",
-								 "Jack", "Queen", "King" };
+								 "Jack", "Queen", "King", "Ace Upper"};
 public:
 	Blackjack(int& playerChips);
 	void printInstructions();
@@ -25,7 +26,6 @@ public:
 	void resetPlayerScore();
 	void addDealerScore(int points);
 	void resetDealerScore();
-	//void checkWinner(int &m_playerScore, int& m_dealerScore);
 	int generateRandomNum();
 	void dealCards(int &playerScore, int chipsPlaced);
 	int getChips()const;

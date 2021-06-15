@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
+#include <windows.h>
 
 Blackjack::Blackjack(int& playerChips) : m_playerScore{ 0 }, m_dealerScore{ 0 }, m_chips{playerChips} {
 }
@@ -14,7 +15,9 @@ void Blackjack::printInstructions(){
 }
 
 void Blackjack::anotherInstructions() {
+	std::cout << "\n-------------------------------------\n";
 	std::cout << "Another game Y/N?";
+	std::cout << "\n-------------------------------------\n";
 }
 
 bool Blackjack::playerInput() {
@@ -42,8 +45,8 @@ int Blackjack::getDealerScore () const{
 }
 
 void Blackjack::playGame(){
-	bool exit{};
 	
+	bool exit{};
 	do {
 		printInstructions();
 		int num{};
@@ -75,9 +78,8 @@ void Blackjack::resetDealerScore(){
 }
 
 int Blackjack::generateRandomNum(){
-	srand(time(NULL));
-	int num{ (rand() % 13 + 1) - 1 };
-	if (num > 8 && num < 13) {
+	int num{ (rand() % 13 + 1)};
+	if (num > 8 && num < 14) {
 		return 10;
 	}
 	else {
@@ -85,16 +87,19 @@ int Blackjack::generateRandomNum(){
 	}
 }
 
+//Need to have a vector array to save current card type of player hand before becoming 10 in generate number function above
 void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 	std::vector<int>playerCardTotal{};
 	std::vector<int>dealerCardTotal{};
 	bool playerSkip{};
 
 	dealerCardTotal.push_back(generateRandomNum());
+	srand((int)time(0));
 	dealerCardTotal.push_back(generateRandomNum());
 	int dealerPoints{ calculateCards(dealerCardTotal) };
 
 	playerCardTotal.push_back(generateRandomNum());
+	srand((int)time(0));
 	playerCardTotal.push_back(generateRandomNum());
 	int playerPoints{};
 
@@ -106,65 +111,74 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 	while (end != true) {
 		if (calculateCards(playerCardTotal) <= 21 && end != true) {
 			
-			std::cout << "Another card Y/N: ";
+			std::cout << "\nAnother card Y/N: ";
 			char choice{};
 			std::cin >> choice;
 
 			switch (choice) {
 			case 'y':
 			case 'Y':
+				srand((int)time(0));
 				playerCardTotal.push_back(generateRandomNum());
-				std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
+				std::cout << "\nPlayer Score: " << calculateCards(playerCardTotal) << "\n";
 				printValueToText(playerCardTotal);
 				break;
 			case 'n':
 			case 'N':
+				srand((int)time(0));
 				end = true;
 				break;
 			default:
+				end = false;
 				break;
 			}
 		}
 		else { end = true; }
 		playerPoints = calculateCards(playerCardTotal);
-		//int card{generateRandomNum()};
 	}
 
-	if (calculateCards(playerCardTotal) == 21) {
-		std::cout << "WINNER!";
+	if (playerPoints == 21) {
+		std::cout << "WINNER!\n";
 		std::cout << "You collected " << chipsPlaced * 2;
 		m_chips += (chipsPlaced * 2);
 		m_playerWin = true;
 		end = true;
 	}
 
-	//Dealers turn if player below 21
+	else if (playerPoints > 21) {
+		std::cout << "BUST! Dealer wins";
+		m_playerWin = false;
+		end = true;
+	}
+
 	if (playerPoints < 21) {
 		while (dealerPoints < playerPoints && dealerPoints < 22) {
 			dealerCardTotal.push_back(generateRandomNum());
 			dealerPoints = calculateCards(dealerCardTotal);
+			std::cout << "Dealer Score: " << dealerPoints << "\n";
 		}
 	}
 
-	if (playerPoints <= dealerPoints && dealerPoints < 22) {
+	if (dealerPoints >= playerPoints && dealerPoints < 22) {
 		std::cout << "Dealer Wins";
 		m_playerWin = false;
 		end = true;
 	}
 
 	if (dealerPoints > 21) {
-		std::cout << "WINNER! Dealer went bust...";
+		std::cout << "Dealer Score: " << calculateCards(dealerCardTotal) << "\n";
+		std::cout << "WINNER! Dealer went bust...\n";
 		std::cout << "You collected " << chipsPlaced * 2;
 		m_chips += (chipsPlaced * 2);
 		m_playerWin = true;
 		end = true;
 	}
 
-	if (playerPoints > 21) {
-		std::cout << "BUST! ";
-		m_playerWin = false;
-		end = true;
-	}
+	dealerCardTotal.clear();
+	playerCardTotal.clear();
+	playerPoints = 0;
+	dealerPoints = 0;
+	m_playerWin = false;
 }
 
 int Blackjack::getChips()const{
