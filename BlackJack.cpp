@@ -79,8 +79,13 @@ void Blackjack::checkWinner(int& m_playerScore, int& m_dealerScore){
 
 int Blackjack::generateRandomNum(){
 	srand(time(NULL));
-	int num{ rand() % 11 + 1 };
-	return num;
+	int num{ (rand() % 13 + 1) - 1 };
+	if (num > 8 && num < 13) {
+		return 10;
+	}
+	else {
+		return num;
+	}
 }
 
 void Blackjack::dealCards(int& playerScore, int chipsPlaced){
@@ -90,9 +95,11 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 
 	dealerCardTotal.push_back(generateRandomNum());
 	dealerCardTotal.push_back(generateRandomNum());
+	int dealerPoints{ calculateCards(dealerCardTotal) };
 
 	playerCardTotal.push_back(generateRandomNum());
 	playerCardTotal.push_back(generateRandomNum());
+	int playerPoints{};
 
 	std::cout << "Dealer Score: " << dealerCardTotal.at(0) << " ??? " << "\n";
 	std::cout << "Player Score: " << calculateCards(playerCardTotal) << "\n";
@@ -120,6 +127,7 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 			}
 		}
 		else { end = true; }
+		playerPoints = calculateCards(playerCardTotal);
 		//int card{generateRandomNum()};
 	}
 
@@ -127,17 +135,33 @@ void Blackjack::dealCards(int& playerScore, int chipsPlaced){
 		std::cout << "WINNER!";
 		std::cout << "You collected " << chipsPlaced * 2;
 		m_chips += (chipsPlaced * 2);
+		m_playerWin = true;
 		end = true;
 	}
 
-	if (calculateCards(playerCardTotal) <= 21) {
-		std::cout << "WINNER!";
+	//Dealers turn if player below 21
+	if (playerPoints < 21) {
+		while (dealerPoints < playerPoints && dealerPoints < 22) {
+			dealerCardTotal.push_back(generateRandomNum());
+			dealerPoints = calculateCards(dealerCardTotal);
+		}
+	}
+
+	if (playerPoints <= dealerPoints && dealerPoints < 22) {
+		std::cout << "Dealer Wins";
+		m_playerWin = false;
+		end = true;
+	}
+
+	if (dealerPoints > 21) {
+		std::cout << "WINNER! Dealer went bust...";
 		std::cout << "You collected " << chipsPlaced * 2;
 		m_chips += (chipsPlaced * 2);
+		m_playerWin = true;
 		end = true;
 	}
 
-	if (calculateCards(playerCardTotal) > 21) {
+	if (playerPoints > 21) {
 		std::cout << "BUST! ";
 		m_playerWin = false;
 		end = true;
