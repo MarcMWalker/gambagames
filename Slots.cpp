@@ -18,7 +18,7 @@ void Slots::playGame() {
 	while (leave != true) {
 		chipsPlaced = setChipsPlaced(m_chips);
 		setRandomNumbers(m_slotNumbers);
-		bool play = PlaySound(TEXT("slot.wav"), NULL, SND_SYNC);
+		playSFX();
 		printSlotNumbers(m_slotNumbers);
 		leave = checkContinue();
 	}
@@ -77,6 +77,10 @@ bool Slots::checkContinue() {
 	default:
 		return false;
 	}
+}
+
+void Slots::playSFX(){
+	bool play = PlaySound(TEXT("slot.wav"), NULL, SND_SYNC);
 }
 
 void Slots::printInstructions() const{

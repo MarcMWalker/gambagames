@@ -15,6 +15,7 @@ public:
 	int getChips()const;
 	void printInstructions()const;
 	bool checkContinue();
+	void playSFX();
 	__int16 setChipsPlaced(int &m_chips);
 	Slots(int &playerChips);
 	~Slots();
