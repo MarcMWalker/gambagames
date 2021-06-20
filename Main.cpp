@@ -4,6 +4,7 @@
 #include "Slots.h"
 
 void printInstructions() {
+	std::cout << "------------------------------------\n";
 	std::cout << "Welcome to the 'Gambling room'\n";
 	std::cout << "------------------------------------\n";
 	std::cout << "(A): Add funds to account\n";
@@ -60,7 +61,7 @@ void menuChoice(char input, User* user, bool &exit) {
 	case 's':
 	case 'S':
 		createSlotGame(playerChips);
-		//user->transferChipsToFunds();
+		user->setChips(playerChips);
 		break;
 	default:
 		std::cout << "Invalid Input";
