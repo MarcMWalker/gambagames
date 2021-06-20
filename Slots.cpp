@@ -1,8 +1,13 @@
+#pragma comment(lib, "winmm.lib")
+#include<iostream>
+#include <ctime>
 #include "Slots.h"
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include<Windows.h>
+#include <mmsystem.h>
 
 Slots::Slots(int& playerChips) : m_chips{ playerChips }, m_slotNumbers{ {0,0,0}, {0,0,0}, {0,0,0} } {
 }
@@ -13,15 +18,27 @@ void Slots::playGame() {
 	while (leave != true) {
 		chipsPlaced = setChipsPlaced(m_chips);
 		setRandomNumbers(m_slotNumbers);
+		bool play = PlaySound(TEXT("slot.wav"), NULL, SND_SYNC);
+		printSlotNumbers(m_slotNumbers);
 		leave = checkContinue();
 	}
 }
 
+void Slots::printSlotNumbers(__int16 m_slotNumbers[3][3]) const{
+	std::cout << "-------------\n";
+	std::cout << "| " << m_slotNumbers[0][0] << " | " << m_slotNumbers[0][1] << " | " << m_slotNumbers[0][2] << " |\n";
+	std::cout << "-------------\n";
+	std::cout << "| " << m_slotNumbers[1][0] << " | " << m_slotNumbers[1][1] << " | " << m_slotNumbers[1][2] << " |\n";
+	std::cout << "-------------\n";
+	std::cout << "| " << m_slotNumbers[2][0] << " | " << m_slotNumbers[2][1] << " | " << m_slotNumbers[2][2] << " |\n";
+	std::cout << "-------------\n";
+}
+
 void Slots::setRandomNumbers(__int16 m_slotNumbers[3][3]) {
-	for (int i{ 0 }; i < 3; i++) {
-		for (int j{ 0 }; j < 3; j++) {
-			__int16 randomNum{ rand() % (1 + 7) };
-			srand(time(NULL));
+	srand((int)time(0));
+	for (int i{ 0 }; i < 3; ++i) {
+		for (int j{ 0 }; j < 3; ++j) {
+			__int16 randomNum{ 1 + rand() % (7 + 0) };
 			m_slotNumbers[i][j] = randomNum;
 		}
 	}
@@ -36,13 +53,13 @@ __int16 Slots::setChipsPlaced(int &m_chips) {
 		if (chips == 1 || chips == 4 || chips == 7) {
 			correct = true;
 			m_chips -= chips;
-			return chips;
 		}
 		else {
 			std::cout << "**Invalid number, must be 1, 4 or 7**\n";
 			correct = false;
 		}
 	}
+	return chips;
 }
 
 bool Slots::checkContinue() {
