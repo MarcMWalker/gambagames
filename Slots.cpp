@@ -1,13 +1,13 @@
 #pragma comment(lib, "winmm.lib")
-#include<iostream>
+#include <iostream>
 #include <ctime>
-#include "Slots.h"
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include<Windows.h>
+#include <Windows.h>
 #include <mmsystem.h>
+#include "Slots.h"
 
 Slots::Slots(int& playerChips) : m_chips{ playerChips }, m_slotNumbers{ {0,0,0}, {0,0,0}, {0,0,0} } {
 }
@@ -161,4 +161,7 @@ void Slots::printInstructions() const{
 
 int Slots::getChips() const {
 	return m_chips;
+}
+
+Slots::~Slots(){
 }
