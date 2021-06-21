@@ -5,17 +5,17 @@ class Slots{
 private:
 	__int16 m_slotNumbers[3][3];
 	int m_chips{};
-	__int16 chipsPlaced{};
+	__int16 m_chipsPlaced{};
 public:
 	void setRandomNumbers(__int16 m_slotNumbers[3][3]);
 	//__int16 getNumbers(__int16 m_slotNumbers[3][3])const;
-	//void checkIfWon(__int16 m_slotNumbers[3][3]);
+	void checkIfWon(__int16 m_slotNumbers[3][3], __int16& placedChips);
 	void playGame();
 	void printSlotNumbers(__int16 m_slotNumbers[3][3])const;
 	int getChips()const;
 	void printInstructions()const;
 	bool checkContinue();
-	void playSFX();
+	void playSFX(int num);
 	__int16 setChipsPlaced(int &m_chips);
 	Slots(int &playerChips);
 	~Slots();
